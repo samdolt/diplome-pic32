@@ -42,6 +42,9 @@ void data_set(uint8_t addr, uint8_t value);
 #define LF_VAL4 (0x64)
 #define LF_VAL5 (0x65)
 
+#define STOP_TO_LINE (0x70)
+#define LINE_FOLLOW (0x71)
+
 
 #endif	/* DATA_H */
 

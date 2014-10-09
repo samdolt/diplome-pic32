@@ -1,7 +1,21 @@
-// Mc32Gest_RS232.C
-// Canevas manipulation TP2B RS232 SLO2 2013-2014
-// fonction d'émission et de réception des message
-
+/******************************************************************************
+ * Communication PIC32 <-> Raspberry Pi
+ ******************************************************************************
+ * Principe de traitement:
+ * -----------------------
+ * 1) Lors de chaque appel de serial_handling, on effectue la copie d'une seul
+ *    valeur du fifo hardware au fifo software
+ * 2) On essaye de lire un caractère dans le fifo software
+ * 3) On traite ce caractère
+ * 4) Si on a une trame complète, on la décode
+ *
+ * Après le décodage de la trame, on a trois options :
+ *
+ * 1) Réception d'une demande d'écriture, on utilise data_set(address, value)
+ * 2) Réception d'une demande de lecture, on utilise data_get(address) est
+ *    on returne un trame sur la ligne Tx sériel
+ * 3) Réception d'une trame invalide, on ne fait rien
+ *****************************************************************************/
 
 
 #include <plib.h>

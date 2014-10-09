@@ -1,8 +1,14 @@
-
-// Mc32Gest_RS232.C
-// Canevas manipulation TP2B RS232 SLO2 2013-2014
-// fonction d'émission et de réception des message
-
+/******************************************************************************
+ * Communication SONAR -> PIC32
+ ******************************************************************************
+ * Principe de traitement:
+ * -----------------------
+ * 1) Lors de chaque appel de serial_handling, on effectue la copie d'une seul
+ *    valeur du fifo hardware au fifo software
+ * 2) On essaye de lire un caractère dans le fifo software
+ * 3) On traite ce caractère
+ * 4) Si on a une trame complète, on la décode
+ *****************************************************************************/
 
 
 #include <plib.h>
@@ -66,11 +72,13 @@ void sonar_handling(void){
     static int step = 0;
     static uint8_t msg[6];
 
+    // On vérifie le FIFO Hardware
     if(UARTReceivedDataIsAvailable(UART1))
     {
        PutCharInFifo ( &descrfifoRX_s, UARTGetDataByte(UART1));
     }
 
+    // On vérifie le FIFO Software
     if(GetReadSize(&descrfifoRX_s) < 1){
         // Il n'y a rien à faire
         return ;

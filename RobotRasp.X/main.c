@@ -137,20 +137,35 @@ int main(int argc, char** argv) {
 
     for(;;){
 
+        // Gestion de l'appuis sur le bouton OFF
+        // En cas d'appuis, cette fonction est bloquante. Elle attent
+        // l'exctinction du Raspberry Pi. Ensuite, l'alimentation est coupée
         off_button_handling();
 
+        // Gestion de l'état de la batterie - Non fonctionnel
         power_handling();
-        
+
+        // Clignottement chaque seconde de la led1
         led1_toogle_handling();
 
+        // Gestion de la communication série avec le Raspberry Pi
         serial_handling();
 
+        // Gestion du servomoteur
         servo_update();
-        
+
+        // Gestion de la réception du sonar
         sonar_handling();
 
+        // Gestion du suivi de ligne - Fonctionnelle sur trois capteurs (1,3,5)
+        // Les capteurs 2 et 4 ne fonctionnent pas, problème de câblage sur le
+        // véroboard
         follower_update();
 
+        // Gestion des moteurs et de la direction
+        // Etat actuel:
+        // - Pas de mesure du courant moteur
+        // - Pas de communication SPI
         direction_handling();
 
 
